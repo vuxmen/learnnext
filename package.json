@@ -5,18 +5,39 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "check:lint": "eslint '**/*.{js,jsx,ts,tsx}'",
+    "check:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'",
+    "check:types": "tsc --pretty --noEmit",
+    "check:all": "yarn check:lint && yarn check:prettier && yarn check:types",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx}'",
+    "husky:prepare": "husky install",
+    "husky:precommit": "npx husky add .husky/pre-commit 'yarn lint-staged'"
   },
   "dependencies": {
     "next": "12.0.10",
+    "node-sass": "6.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
     "@types/node": "17.0.15",
     "@types/react": "17.0.39",
+    "@typescript-eslint/eslint-plugin": "5.10.2",
+    "@typescript-eslint/parser": "5.10.2",
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.10",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "husky": "7.0.4",
+    "lint-staged": "12.3.3",
+    "prettier": "2.5.1",
     "typescript": "4.5.5"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "yarn check:all",
+      "yarn format",
+      "gid add ."
+    ]
   }
 }
